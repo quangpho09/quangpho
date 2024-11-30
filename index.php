@@ -1,47 +1,30 @@
-<?php include 'header.php'; ?>
-<?php include 'product.php'; ?>
-
+<?php include 'header.php' ?>
+<?php include 'DB.php' ?>
+<?php 
+    $sql = "select * from flower";
+    $result = $conn->query($sql);
+?>
 <main>
-    <?php if (empty($products)): ?>
-        <p>Không có sản phẩm nào.</p>
-    <?php else: ?>
-        <div>
-            <button class="btn btn-success" data-bs-toggle="modal">
-                <a href="add.php" style="color: black">Thêm mới</a>
-            </button>
-        </div>
-        
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
+    <div class="card-body">
+        <table class="table table-striped"> 
+            <thead>
                     <tr>
                         <th>Sản phẩm</th>
                         <th>Giá thành</th>
-                        <th>Sửa</th>
-                        <th>Xóa</th>
+                        <th>Ảnh</th>
                     </tr>
                 </thead>
-                <tbody?>
-                <?php foreach ($products as $index => $product): ?>
+                <?php while($flowers = $result -> FETCH_ASSOC()){?>
+                <tbody>
                     <tr>
-                        <th><?php echo htmlspecialchars($product['name']); ?>:</th>
-                        <td><?php echo htmlspecialchars($product['price']); ?> VND</td>
+                        <th><?php echo htmlspecialchars($flowers['Name']) ?></th>
+                        <td><?php echo htmlspecialchars($flowers['Des']) ?></td>
                         <td>
-                            <a href="update.php?id=<?php echo $index; ?>">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="">
-                                <i class="bi bi-trash3"></i>
-                            </a>
+                            <img src="<?php echo htmlspecialchars($flowers['Img']) ?>" alt="hoa" style="width: 300px; length: 300px">
                         </td>
                     </tr>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
                 </tbody>
+                <?php } ?>
             </table>
         </div>
 </main>
-
-<?php include 'footer.php'; ?>
